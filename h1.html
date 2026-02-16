@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      color: #fff;
+      text-shadow: 2px 2px 15px rgba(0,0,0,0.5);
+      z-index: 2;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ffccff, 0 0 20px #ff66ff, 0 0 30px #ff3399; }
+      to   { text-shadow: 0 0 20px #fff, 0 0 30px #ff66cc, 0 0 40px #ff0066; }
+    }
+
+    p {
+      font-size: 1.5em;
+      color: white;
+      max-width: 700px;
+      line-height: 1.5;
+      margin-top: 15px;
+      z-index: 2;
+      text-shadow: 1px 1px 10px rgba(0,0,0,0.4);
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      animation: float 8s infinite ease-in;
+      opacity: 0.9;
+    }
+
+    .balloon:before {
+      content: '';
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      width: 2px;
+      height: 25px;
+      background: black;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-500px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(-5deg); }
+    }
+
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday Sneha! 🎂</h1>
+  <p>💖 I’m very lucky and truly blessed to have a close friend like you.  
+  Wishing you the very best of birthdays! 🎁✨</p>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    // Balloons
+    for(let i=0; i<15; i++){
+      let b = document.createElement("div");
+      b.className = "balloon";
+      b.style.left = Math.random()*100 + "vw";
+      b.style.background = "hsl(" + Math.random()*360 + ",70%,60%)";
+      b.style.animationDuration = (5 + Math.random()*5) + "s";
+      document.body.appendChild(b);
+    }
+
+    // Confetti
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = Array.from({length:250}, () => ({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*6+2,
+      d: Math.random()*10
+    }));
+
+    function drawConfetti(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.beginPath();
+      confetti.forEach(p => {
+        ctx.moveTo(p.x, p.y);
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+      });
+      ctx.fill();
+      update();
+    }
+
+    function update(){
+      confetti.forEach(p => {
+        p.y += Math.cos(p.d) + 1;
+        p.x += Math.sin(p.d);
+
+        if(p.y > canvas.height){
+          p.x = Math.random()*canvas.width;
+          p.y = -10;
+        }
+      });
+    }
+
+    setInterval(drawConfetti, 30);
+  </script>
+</body>
+</html>
