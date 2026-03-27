@@ -1,7 +1,4 @@
-AT THE START OF THIS REPO I AM AT BEGGINING BUT NOW 
-NOT I COMPLETED 
-PYTHON
-NUMPY
-PANDAS
-MATPLOTLIB
-AND SEABORN IN PROGRESS
+readme update
+firstly there have some basic codes of python
+afterthat there have complete numpy major commanads after that there have pandas 
+now i will going for matplotlib practive
